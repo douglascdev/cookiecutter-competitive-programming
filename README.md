@@ -1,2 +1,2 @@
-# cookiecutter-kick-start-python
-A cookiecutter template with tests for Google Kick Start
+# Cookiecutter for Python Competitive Programming
+A cookiecutter template for competitive programming with mocked input and output to facilitate testing/TDD.
