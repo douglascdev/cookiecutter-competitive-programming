@@ -9,6 +9,7 @@ class CPProblemTests(TestCase):
     Each method starting with "test_" will run when you run this script.
     You can copy the "test_problem" method and simply replace the variables with the input and expected output.
     """
+
     def io_test(self, problem_input, problem_output, method=cp_problem.problem) -> None:
         """
         Mocks the input method and the standard output and tests if the expected output is printed.
@@ -16,7 +17,9 @@ class CPProblemTests(TestCase):
         :param problem_output: the output that the method is expected to print()
         :param method: method that will be called with mocked input and output, cp_problem.problem by default
         """
-        with patch('builtins.input', return_value=problem_input), patch('sys.stdout', new=StringIO()) as fake_out:
+        with patch("builtins.input", side_effect=problem_input.split("\n")), patch(
+            "sys.stdout", new=StringIO()
+        ) as fake_out:
             method()
             self.assertEqual(fake_out.getvalue(), problem_output)
 
@@ -43,5 +46,5 @@ class CPProblemTests(TestCase):
         self.io_test(problem_input, problem_output)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
