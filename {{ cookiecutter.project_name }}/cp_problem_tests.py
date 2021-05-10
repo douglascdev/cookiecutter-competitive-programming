@@ -1,7 +1,22 @@
 from io import StringIO
 from unittest import TestCase, main
 from unittest.mock import patch
+from typing import Callable
 import cp_problem
+
+
+def run_with_mocked_io(problem_input: str, method: Callable) -> str:
+    """
+    Mocks the input method and the standard output and tests if the expected output is printed.
+    :param problem_input: input that will be mocked into input() calls within the function
+    :param method: method that will be called with mocked input and output
+    :return: the output printed while running the method
+    """
+    with patch("builtins.input", side_effect=problem_input.split("\n")), patch(
+        "sys.stdout", new=StringIO()
+    ) as fake_out:
+        method()
+        return fake_out.getvalue()
 
 
 class CPProblemTests(TestCase):
@@ -10,40 +25,12 @@ class CPProblemTests(TestCase):
     You can copy the "test_problem" method and simply replace the variables with the input and expected output.
     """
 
-    def io_test(self, problem_input, problem_output, method=cp_problem.problem) -> None:
-        """
-        Mocks the input method and the standard output and tests if the expected output is printed.
-        :param problem_input: input that will be mocked into input() calls within the function
-        :param problem_output: the output that the method is expected to print()
-        :param method: method that will be called with mocked input and output, cp_problem.problem by default
-        """
-        with patch("builtins.input", side_effect=problem_input.split("\n")), patch(
-            "sys.stdout", new=StringIO()
-        ) as fake_out:
-            method()
-            self.assertEqual(fake_out.getvalue(), problem_output)
-
-    @staticmethod
-    def method() -> None:
-        _ = input()
-        print("1", end="")
-
-    def test_io_test(self) -> None:
-        """
-        Tests if the mock function is working as intended
-        """
-        problem_input = """1"""
-        problem_output = """1"""
-        self.io_test(problem_input, problem_output, self.method)
-
     def test_problem(self) -> None:
-        """
-        Enter the input and expected output below. Running this file will run this test automatically.
-        Copy and paste this method to create multiple tests.
-        """
+        """ Enter the input and expected output below and run this file """
         problem_input = """"""
-        problem_output = """"""
-        self.io_test(problem_input, problem_output)
+        expected_output = """"""
+        actual_output = run_with_mocked_io(problem_input=problem_input, method=cp_problem.problem)
+        self.assertEqual(actual_output, expected_output)
 
 
 if __name__ == "__main__":
