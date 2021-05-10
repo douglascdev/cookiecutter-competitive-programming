@@ -7,16 +7,16 @@ import cp_problem
 
 def run_with_mocked_io(problem_input: str, method: Callable) -> str:
     """
-    Mocks the input method and the standard output and tests if the expected output is printed.
+    Mocks the input method and the standard output, then returns the printed output.
     :param problem_input: input that will be mocked into input() calls within the function
     :param method: method that will be called with mocked input and output
     :return: the output printed while running the method
     """
     with patch("builtins.input", side_effect=problem_input.split("\n")), patch(
         "sys.stdout", new=StringIO()
-    ) as fake_out:
+    ) as mocked_output:
         method()
-        return fake_out.getvalue()
+        return mocked_output.getvalue()
 
 
 class CPProblemTests(TestCase):
@@ -29,7 +29,9 @@ class CPProblemTests(TestCase):
         """ Enter the input and expected output below and run this file """
         problem_input = """"""
         expected_output = """"""
-        actual_output = run_with_mocked_io(problem_input=problem_input, method=cp_problem.problem)
+        actual_output = run_with_mocked_io(
+            problem_input=problem_input, method=cp_problem.problem
+        )
         self.assertEqual(actual_output, expected_output)
 
 
