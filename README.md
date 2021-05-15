@@ -3,6 +3,8 @@ A cookiecutter template for competitive programming with mocked input and output
 
 The advantage of this approach is that you can easily create methods to test inputs and outputs replacing values that are entered with stdin and stdout by entering the values in a string, and then just paste your solution on the contest directly.
 
+The running time is also printed for each test by default.
+
 ## Usage
 Install cookiecutter:
 ```

@@ -2,6 +2,7 @@ from io import StringIO
 from unittest import TestCase, main
 from unittest.mock import patch
 from typing import Callable
+import time
 import cp_problem
 
 
@@ -24,6 +25,16 @@ class CPProblemTests(TestCase):
     Each method starting with "test_" will run when you run this script.
     You can copy the "test_problem" method and simply replace the variables with the input and expected output.
     """
+
+    print_exec_times = True
+
+    def setUp(self):
+        if self.print_exec_times:
+            self.start_time = time.time()
+
+    def tearDown(self):
+        if self.print_exec_times:
+            print(f"{self.id()}: {time.time() - self.start_time:.3f}s")
 
     def test_problem(self) -> None:
         """ Enter the input and expected output below and run this file """
